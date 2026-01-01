@@ -29,15 +29,15 @@ public class Customer {
     private Long id; // Identificador interno del cliente
 
     @Column(name = "external_id", nullable = false, unique = true)
-    private String customerExternalId; // ID externo (email, contrato, etc.)
+    private String externalId; // ID externo (email, contrato, etc.)
 
     @Column(name = "customer_name", nullable = false)
-    private String customerName; // Nombre del cliente
+    private String name; // Nombre del cliente
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt; // Fecha de registro del cliente
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)  // Relación 1 a muchos con ModelInput
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)  // Relación 1 a N con ModelInput
     // cascade ALL propaga operaciones a los inputs
     private List<ModelInput> modelInputs = new ArrayList<>(); // Historial de inputs asociados al cliente (cliente puede tener muchos inputs)
 

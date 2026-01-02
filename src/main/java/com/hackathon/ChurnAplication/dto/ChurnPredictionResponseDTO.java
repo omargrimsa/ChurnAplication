@@ -6,24 +6,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PredictionResultDTO {
-    private Long id;
+public class ChurnPredictionResponseDTO {
+    /* Funciones de la clase:
+       - Recibir la predicción pura devuelta por la API externa (respuesta del modelo de IA)
+    */
+
     private Double churnProbability;
     private Boolean willCancel;
-    private LocalDateTime predictedAt;
-
-    // Datos del ModelInput
-    private Long modelInputId;
-
-    // Datos del Customer
-    private Long customerId;
-    private String customerName;
-
 
 }

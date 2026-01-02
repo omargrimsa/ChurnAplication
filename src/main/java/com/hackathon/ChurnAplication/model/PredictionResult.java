@@ -27,7 +27,7 @@ public class PredictionResult {
     private Long id; // Identificador del resultado
 
     @OneToOne(optional = false) // Relación 1 a 1 con el input, Cada resultado corresponde a un input
-    @JoinColumn(name = "model_input_id", nullable = false, unique = true) // FK → model_inputs.id
+    @JoinColumn(name = "model_input_id", nullable = false, unique = true) // FK → model_inputs.id (la clase PredictionResult usa la FK por eso usa @JoinColumn y no mappedBy)
     private ModelInput modelInput; // Input que generó este resultado
 
     @Column(name = "churn_probability", nullable = false) // Probabilidad de churn

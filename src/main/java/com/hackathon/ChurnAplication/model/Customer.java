@@ -25,6 +25,7 @@ public class Customer {
     - Permitir histórico de predicciones por cliente */
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id; // Identificador interno del cliente
 

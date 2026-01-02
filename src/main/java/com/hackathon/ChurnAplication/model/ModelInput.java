@@ -28,7 +28,7 @@ public class ModelInput {
     private Long id; // Identificador del input
 
     @ManyToOne(optional = false) // Muchos registros de esta entidad pertenecen a UN solo Customer, la relación es obligatoria
-    @JoinColumn(name = "customer_id", nullable = false) // customer_id es FK hacia customers.id
+    @JoinColumn(name = "customer_id", nullable = false) // customer_id es FK hacia customers.id (la clase ModelInput usa la FK por eso usa @JoinColumn y no mappedBy)
     private Customer customer; // Cliente al que pertenecen los datos
 
     @Column(name = "customer_tenure", nullable = false)

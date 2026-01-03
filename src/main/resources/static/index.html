@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Clientes - ChurnInsight</title>
+    <style>
+        body { font-family: sans-serif; padding: 2rem; max-width: 600px; margin: 0 auto; }
+        .form-group { margin-bottom: 1rem; }
+        label { display: block; margin-bottom: .5rem; font-weight: bold; }
+        input { width: 100%; padding: 0.5rem; font-size: 1rem; }
+        button { background-color: #28a745; color: white; padding: 0.7rem 1.5rem; border: none; cursor: pointer; font-size: 1rem; }
+        button:hover { background-color: #218838; }
+        #mensaje { margin-top: 1rem; font-weight: bold; }
+        .exito { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+
+<h2>Registrar Nuevo Cliente</h2>
+
+<form id="clienteForm">
+    <div class="form-group">
+        <label for="name">Nombre Completo:</label>
+        <input type="text" id="name" name="name" placeholder="Ej: Ana López" required>
+    </div>
+
+    <div class="form-group">
+        <label for="externalId">ID de Negocio (External ID):</label>
+        <input type="text" id="externalId" name="externalId" placeholder="Ej: CUST-999" required>
+    </div>
+
+    <button type="submit">Guardar Cliente</button>
+</form>
+
+<div id="mensaje"></div>
+
+<script>
+    document.getElementById('clienteForm').addEventListener('submit', async function(event) {
+        event.preventDefault(); // Evita que la página se recargue
+
+        // 1. Capturar datos del formulario
+        const data = {
+            name: document.getElementById('name').value,
+            externalId: document.getElementById('externalId').value
+        };
+
+        // 2. Enviar petición POST a tu API Java
+        try {
+            const response = await fetch('/api/customers', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            const mensajeDiv = document.getElementById('mensaje');
+
+            if (response.ok) {
+                const result = await response.json();
+                mensajeDiv.className = 'exito';
+                mensajeDiv.innerText = `¡Éxito! Cliente creado: ${result.name} (ID: ${result.externalId})`;
+                document.getElementById('clienteForm').reset(); // Limpiar formulario
+            } else {
+                mensajeDiv.className = 'error';
+                mensajeDiv.innerText = 'Error al crear el cliente. Revisa si el ID ya existe.';
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('mensaje').innerText = 'Error de conexión con el servidor.';
+        }
+    });
+</script>
+</body>
+</html>

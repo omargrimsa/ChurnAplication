@@ -9,4 +9,10 @@ import java.util.Optional;
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
     // Método para buscar clientes por su ID de negocio (ej. "CUST-001") en lugar del ID numérico
     Optional<Customer> findByExternalId(String externalId);
+
+    // Método adicional: usado pora verificar el externalId del cliente "si existe" (true/false), asi no se crea 2 veces
+    // un registro con este externalId. Útil para validaciones antes de guardar.
+    boolean existsByExternalId(String externalId);
+
+
 }

@@ -13,6 +13,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerDetailDTO {
+    /* Función de la clase:
+       - Se usa para mostrar datos del cliente (salida)
+    */
+    private long id;
     private String externalId;
     private String name;
     private LocalDateTime createdAt;

@@ -1,21 +1,28 @@
 package com.hackathon.ChurnAplication.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
+@Data
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChurnPredictionResponseDTO {
-    /* Funciones de la clase:
-       - Recibir la predicción pura devuelta por la API externa (respuesta del modelo de IA)
-    */
+     /* Función:
+        - Mapear la respuesta JSON que viene del servidor FastAPI.
+        - Ejemplo real: { "prevision": "Va a cancelar", "probabilidad_de_churn": 1 }
+     */
 
-    private Double churnProbability;
-    private Boolean willCancel;
+    @JsonProperty("probabilidad_de_churn")
+    private Double churnProbability; // Probabilidad de churn
 
+    @JsonProperty("prevision")
+    private String prevision; // Recibe el texto: "Va a cancelar"
+
+    // Método auxiliar: Convierte el texto de la API al Boolean que usa tu sistema
+    public Boolean getWillCancel() {
+        return "Va a cancelar".equalsIgnoreCase(this.prevision);
+    }
 }

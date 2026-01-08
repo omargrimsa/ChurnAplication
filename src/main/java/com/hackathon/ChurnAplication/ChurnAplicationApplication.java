@@ -9,5 +9,4 @@ public class ChurnAplicationApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ChurnAplicationApplication.class, args);
 	}
-
 }

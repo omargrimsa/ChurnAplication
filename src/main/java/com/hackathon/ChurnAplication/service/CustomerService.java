@@ -2,13 +2,19 @@ package com.hackathon.ChurnAplication.service;
 
 import com.hackathon.ChurnAplication.dto.CustomerCreateDTO;
 import com.hackathon.ChurnAplication.dto.CustomerDetailDTO;
+
+import com.hackathon.ChurnAplication.dto.ModelInputDTO;
 import com.hackathon.ChurnAplication.model.Customer;
+import com.hackathon.ChurnAplication.model.ModelInput;
+import com.hackathon.ChurnAplication.model.PredictionResult;
 import com.hackathon.ChurnAplication.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -57,4 +63,5 @@ public class CustomerService implements ICustomerService {
 
 
     }
+
 }

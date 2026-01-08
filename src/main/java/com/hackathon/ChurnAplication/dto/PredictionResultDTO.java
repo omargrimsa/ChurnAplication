@@ -1,10 +1,7 @@
 package com.hackathon.ChurnAplication.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -12,18 +9,23 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class PredictionResultDTO {
-    private Long id;
+    /* Función:
+       - Entregar al usuario final el resultado procesado y guardado en BD.
+    */
+
+    private Long predictionId;
     private Double churnProbability;
     private Boolean willCancel;
     private LocalDateTime predictedAt;
 
     // Datos del ModelInput
-    private Long modelInputId;
+    //private Long modelInputId;
 
     // Datos del Customer
-    private Long customerId;
-    private String customerName;
+    //private Long customerId;
+   // private String customerName;
 
 
 }

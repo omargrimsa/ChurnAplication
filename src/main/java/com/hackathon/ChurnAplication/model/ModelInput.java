@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Table(name = "model_inputs")
 public class ModelInput {
     /* Función de la clase:
-     - Guardar exactamente lo que vio el modelo
+     - Guardar exactamente lo que vio el modelo de predccion + id cliente al que pertenecen los datos y el resultado de la prediccion
      - Permitir Envíos masivos
      - Comparación entre inputs y outputs
      - Trazabilidad */

@@ -2,66 +2,60 @@ package com.hackathon.ChurnAplication.service;
 
 import com.hackathon.ChurnAplication.dto.CustomerCreateDTO;
 import com.hackathon.ChurnAplication.dto.CustomerDetailDTO;
-
-import com.hackathon.ChurnAplication.dto.ModelInputDTO;
 import com.hackathon.ChurnAplication.model.Customer;
-import com.hackathon.ChurnAplication.model.ModelInput;
-import com.hackathon.ChurnAplication.model.PredictionResult;
 import com.hackathon.ChurnAplication.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class CustomerService implements ICustomerService {
-    /* Función de la clase:
-       - Aquí es donde ocurre la lógica real
-       - Tomamos el DTO, lo convertimos en Entidad, lo guardamos y devolvemos el resultado.
-       */
+
     private final CustomerRepository customerRepository;
 
     @Override
-    public CustomerDetailDTO createCustomer(CustomerCreateDTO dto) {
-
-        // 1. Validación de Negocio: Verificar si ya existe un cliente con ese ID externo.
+    public List<CustomerDetailDTO> createCustomer(CustomerCreateDTO dto) {
+        // 1. Validación y creación del nuevo cliente (lógica que ya tenías)
         if (customerRepository.existsByExternalId(dto.getExternalId())) {
             throw new RuntimeException("Ya existe un cliente con el ID externo: " + dto.getExternalId());
         }
-        // 2. Mapeo (Convertir DTO a Entidad):
-        // Pasamos los datos del objeto ligero (DTO) a la Entidad que se guarda en BD.
+
         Customer customer = new Customer();
         customer.setName(dto.getName());
         customer.setExternalId(dto.getExternalId());
-
-        // Asignamos la fecha de creación automática (auditoría básica).
         customer.setCreatedAt(LocalDateTime.now());
 
-        // 3. Persistencia: Guardamos en la base de datos (H2 en este caso).
-        // El método .save() devuelve la entidad ya guardada (con su ID numérico generado).
-        Customer savedCustomer = customerRepository.save(customer);
+        customerRepository.save(customer);
 
-        // 4. Mapeo de Salida (Convertir Entidad a DTO):
-        // Preparamos la respuesta para el usuario.
-        CustomerDetailDTO responseDetailDto = new CustomerDetailDTO();
-        responseDetailDto.setId(savedCustomer.getId());
-        responseDetailDto.setExternalId(savedCustomer.getExternalId());
-        responseDetailDto.setName(savedCustomer.getName());
-        responseDetailDto.setCreatedAt(savedCustomer.getCreatedAt());
-
-        // Inicializamos la lista de historial vacía, porque es un cliente nuevo.
-        responseDetailDto.setHistory(new ArrayList<>());
-
-        return responseDetailDto;
-
-
-
-
-
+        // 2. Después de guardar, obtén y devuelve la lista completa de clientes.
+        return getAllCustomers();
     }
 
+    @Override
+    public List<CustomerDetailDTO> getAllCustomers() {
+        // Obtenemos todas las entidades Customer de la base de datos.
+        List<Customer> customers = customerRepository.findAll();
+
+        // Mapeamos la lista de entidades a una lista de DTOs.
+        return customers.stream()
+                .map(this::mapToCustomerDetailDTO)
+                .collect(Collectors.toList());
+    }
+
+    // Método de ayuda para convertir una entidad Customer a CustomerDetailDTO
+    private CustomerDetailDTO mapToCustomerDetailDTO(Customer customer) {
+        CustomerDetailDTO dto = new CustomerDetailDTO();
+        dto.setId(customer.getId());
+        dto.setExternalId(customer.getExternalId());
+        dto.setName(customer.getName());
+        dto.setCreatedAt(customer.getCreatedAt());
+        // Aquí puedes agregar la lógica para cargar el historial si es necesario
+        dto.setHistory(new ArrayList<>());
+        return dto;
+    }
 }

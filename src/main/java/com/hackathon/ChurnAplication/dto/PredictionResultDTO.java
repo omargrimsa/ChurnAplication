@@ -16,7 +16,7 @@ public class PredictionResultDTO {
     */
 
     private Long predictionId;
-    private Double churnProbability;
+    private Float churnProbability;
     private Boolean willCancel;
     private LocalDateTime predictedAt;
 

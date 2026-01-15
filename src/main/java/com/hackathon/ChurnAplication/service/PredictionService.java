@@ -44,17 +44,29 @@ public class PredictionService {
         // 2. Preparar el Request para la API Externa (Mapeo de DTO interno a DTO externo)
         ChurnPredictionRequestDTO requestToApi = ChurnPredictionRequestDTO.builder()
                 .customerTenure(inputDTO.getCustomerTenure())
-                .accountChargesMonthly(inputDTO.getAccountchargesMonthly())
-                .isNewCustomer(inputDTO.getIsNewCustomer())
+                .accountTotal(inputDTO.getAccountTotal())
+                .accountChargesMonthly(Double.valueOf(inputDTO.getAccountChargesMonthly()))
                 .isMonthlyContract(inputDTO.getIsMonthlyContract())
-                .isHighCost(inputDTO.getIsHighCost())
+                .isElectronicPay(inputDTO.getIsElectronicPay())
+                .hasTechnicalSupport(inputDTO.getHasTechnicalSupport())
+                .hasOnlineSecurity(inputDTO.getHasOnlineSecurity())
+                .hasTwoYearContract(inputDTO.getHasTwoYearContract())
+                .hasOnlineInvoices(inputDTO.getHasOnlineInvoices())
+                .hasOneYearContract(inputDTO.getHasOneYearContract())
                 .build();
 
         // 3. LLAMADA A LA API EXTERNA
         // NOTA: Hacemos esto ANTES de guardar en BD. Si falla, se lanza excepción y no se guarda nada.
         ChurnPredictionResponseDTO apiResponse;
         try {
-            apiResponse = restTemplate.postForObject(externalApiUrl, requestToApi, ChurnPredictionResponseDTO.class);
+            // DEBUG: Imprimir respuesta cruda para ver los nombres de los campos
+            String jsonRaw = restTemplate.postForObject(externalApiUrl, requestToApi, String.class);
+            System.out.println("RESPUESTA API PYTHON: " + jsonRaw);
+            
+            // Convertir manualmente (necesitas importar ObjectMapper)
+            com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+            apiResponse = mapper.readValue(jsonRaw, ChurnPredictionResponseDTO.class);
+            
         } catch (Exception e) {
             // Si la API no responde o da error, notificamos al usuario y cortamos el flujo.
             throw new RuntimeException("Error al conectar con el servicio de predicción externo: " + e.getMessage());
@@ -70,11 +82,16 @@ public class PredictionService {
         ModelInput modelInput = new ModelInput();
         modelInput.setCustomer(customer);
         modelInput.setCustomerTenure(inputDTO.getCustomerTenure());
-        modelInput.setAccountChargesMonthly(inputDTO.getAccountchargesMonthly());
-        modelInput.setIsNewCustomer(inputDTO.getIsNewCustomer());
+        modelInput.setAccountTotal(inputDTO.getAccountTotal());
+        modelInput.setAccountChargesMonthly(inputDTO.getAccountChargesMonthly());
         modelInput.setIsMonthlyContract(inputDTO.getIsMonthlyContract());
-        modelInput.setIsHighCost(inputDTO.getIsHighCost());
-        modelInput.setSentAt(LocalDateTime.now());
+        modelInput.setIsElectronicPay(inputDTO.getIsElectronicPay());
+        modelInput.setHasTechnicalSupport(inputDTO.getHasTechnicalSupport());
+        modelInput.setHasOnlineSecurity(inputDTO.getHasOnlineSecurity());
+        modelInput.setHasTwoYearContract(inputDTO.getHasTwoYearContract());
+        modelInput.setHasOnlineInvoices(inputDTO.getHasOnlineInvoices());
+        modelInput.setHasOneYearContract(inputDTO.getHasOneYearContract());
+        modelInput.setSentedAt(LocalDateTime.now());
 
         ModelInput savedInput = modelInputRepository.save(modelInput);
 

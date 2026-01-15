@@ -29,10 +29,10 @@ public class PredictionResult {
     private ModelInput modelInput; // Input que dio origen a este PredictionResult
 
     @Column(name = "churn_probability", nullable = false) // Probabilidad de churn
-    private Double churnProbability; // Probabilidad de churn
+    private Float churnProbability; // Probabilidad de churn (probabilidad)
 
     @Column(name = "will_cancel", nullable = false)
-    private Boolean willCancel; // Interpretación final que indica indica se habrá Churn o no
+    private Boolean willCancel; // Interpretación final que indica indica se habrá Churn o no (renuncia)
 
     @Column(name = "predicted_at", nullable = false)
     private LocalDateTime predictedAt; // Fecha/hora de la predicción

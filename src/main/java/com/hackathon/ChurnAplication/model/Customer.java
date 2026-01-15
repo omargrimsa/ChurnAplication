@@ -42,5 +42,10 @@ public class Customer {
     // cascade ALL propaga operaciones a los inputs
     private List<ModelInput> modelInputs = new ArrayList<>(); // Historial de inputs asociados al cliente (cliente puede tener muchos inputs)
 
+    // Se ejecuta automáticamente antes de insertar en la base de datos (Mejora en la Entidad (Automatización de fecha)
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 
 }

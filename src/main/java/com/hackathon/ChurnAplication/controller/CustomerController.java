@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 // @RequestMapping: Define la dirección base. Todas las rutas de aquí empezarán con /api/customers
 @RequestMapping("/api/customers")
 @RequiredArgsConstructor
-public class CustomerControler {
+public class CustomerController {
 
     // Inyectamos la interfaz del servicio, no la implementación directa (buenas prácticas de desacoplamiento).
     private final ICustomerService customerService;
 
 
     // @PostMapping: Indica que este método responde a peticiones tipo POST (usadas para crear cosas).
-    // La URL completa será: POST http://localhost:8080/api/customers
+    // La URL completa será: POST http://IP_del_host:8080/api/customers
     @PostMapping
     public ResponseEntity<CustomerDetailDTO> createCustomer(@Valid @RequestBody CustomerCreateDTO createDTO) {
 

@@ -3,64 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Registro de Clientes - ChurnInsight</title>
-    <style>
-        body { font-family: sans-serif; padding: 2rem; max-width: 800px; margin: 0 auto; background-color: #f9f9f9; }
-
-        /* Estilo tipo tarjeta (Card) */
-        .card {
-            background-color: white;
-            border: 1px solid #ddd;
-            padding: 2rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        h2, h3 { margin-top: 0; color: #333; }
-
-        .form-group { margin-bottom: 1rem; }
-        label { display: block; margin-bottom: .5rem; font-weight: bold; color: #555; }
-        input { width: 100%; padding: 0.6rem; font-size: 1rem; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
-
-        button {
-            background-color: #28a745;
-            color: white;
-            padding: 0.7rem 1.5rem;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            border-radius: 4px; /* Botón redondeado */
-            width: 100%;
-        }
-        button:hover { background-color: #218838; }
-
-        #mensaje { margin-top: 1rem; font-weight: bold; text-align: center; }
-        .exito { color: green; }
-        .error { color: red; }
-
-        /* Estilos para la tabla */
-        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-        th, td { border-bottom: 1px solid #eee; padding: 12px; text-align: left; }
-        th { background-color: #f8f9fa; color: #333; font-weight: 600; }
-        tr:last-child td { border-bottom: none; }
-
-        .btn-predict {
-            background-color: #007bff;
-            color: white;
-            padding: 6px 12px;
-            text-decoration: none;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            display: inline-block;
-        }
-        .btn-predict:hover { background-color: #0056b3; }
-    </style>
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
 
 <!-- Tarjeta 1: Formulario de Registro -->
 <div class="card">
-    <h2>Registrar Nuevo Cliente</h2>
+    <h3>Registrar Nuevo Cliente</h3>
     <form id="clienteForm">
         <div class="form-group">
             <label for="name">Nombre Completo:</label>
@@ -94,84 +43,6 @@
     </table>
 </div>
 
-<script>
-    // Función para renderizar la tabla
-    function renderTable(customers) {
-        const tbody = document.querySelector('#customersTable tbody');
-        tbody.innerHTML = ''; // Limpiar tabla actual
-
-        if (customers.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color:#777;">No hay clientes registrados aún.</td></tr>';
-            return;
-        }
-
-        customers.forEach(customer => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${customer.externalId}</td>
-                <td>${customer.name}</td>
-                <td>
-                    <a href="predictions.html?customerId=${customer.id}" class="btn-predict">Predicciones</a>
-                </td>
-            `;
-            tbody.appendChild(row);
-        });
-    }
-
-    // Cargar clientes al iniciar la página
-    async function loadCustomers() {
-        try {
-            const response = await fetch('/api/customers');
-            if (response.ok) {
-                const customers = await response.json();
-                renderTable(customers);
-            }
-        } catch (error) {
-            console.error('Error cargando clientes:', error);
-        }
-    }
-
-    // Cargar clientes al inicio
-    loadCustomers();
-
-    document.getElementById('clienteForm').addEventListener('submit', async function(event) {
-        event.preventDefault(); // Evita que la página se recargue
-
-        // 1. Capturar datos del formulario
-        const data = {
-            name: document.getElementById('name').value,
-            externalId: document.getElementById('externalId').value
-        };
-
-        // 2. Enviar petición POST a tu API Java
-        try {
-            const response = await fetch('/api/customers', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-
-            const mensajeDiv = document.getElementById('mensaje');
-
-            if (response.ok) {
-                // Ahora la API devuelve la lista completa de clientes
-                const allCustomers = await response.json();
-
-                mensajeDiv.className = 'exito';
-                mensajeDiv.innerText = `¡Éxito! Cliente creado correctamente.`;
-                document.getElementById('clienteForm').reset(); // Limpiar formulario
-
-                // Actualizar la tabla con la nueva lista recibida
-                renderTable(allCustomers);
-            } else {
-                mensajeDiv.className = 'error';
-                mensajeDiv.innerText = 'Error al crear el cliente. Revisa si el ID ya existe.';
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            document.getElementById('mensaje').innerText = 'Error de conexión con el servidor.';
-        }
-    });
-</script>
+<script src="js/index.js"></script>
 </body>
 </html>

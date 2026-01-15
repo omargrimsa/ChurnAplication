@@ -1,6 +1,5 @@
 package com.hackathon.ChurnAplication.dto;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -14,17 +13,18 @@ import lombok.*;
 public class ChurnPredictionResponseDTO {
      /* Función:
         - Mapear la respuesta JSON que viene del servidor FastAPI.
-        - Ejemplo real: { "prevision": "Va a cancelar", "probabilidad_de_churn": 1 }
+        - Ejemplo esperado: { "renuncia": true, "probabilidad": 0.85 }
      */
 
     @JsonProperty("probabilidad")
     private Float churnProbability; // Probabilidad de churn
 
-    @JsonProperty("mensaje")
-    private String prevision; // Recibe el texto: "Va a cancelar"
+    @JsonProperty("renuncia")
+    private Boolean renuncia; // Nuevo campo booleano directo desde la API
 
-    // Método auxiliar: Convierte el texto de la API al Boolean que usa tu sistema
+    // Método auxiliar: Adapta el campo "renuncia" al estándar "willCancel" de tu sistema interno
     public Boolean getWillCancel() {
-        return "Va a cancelar".equalsIgnoreCase(this.prevision);
+        // Si renuncia es null (por si acaso), devolvemos false o manejamos el error
+        return Boolean.TRUE.equals(this.renuncia);
     }
 }

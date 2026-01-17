@@ -76,9 +76,38 @@
     </form>
 </div>
 
-<!-- DIV 3: Resultado de la Predicción -->
+<!-- DIV 3: Resultado de la Predicción Actual -->
 <div id="predictionResult" class="result-box">
     <!-- Aquí se mostrará el resultado -->
+</div>
+
+<!-- DIV 4: Historial de Predicciones -->
+<div class="card">
+    <h3>Historial de Predicciones</h3>
+    <div style="overflow-x: auto;">
+        <table id="historyTable" class="history-table">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Meses</th>
+                    <th>Total</th>
+                    <th>Mensual</th>
+                    <th>Contrato Mensual</th>
+                    <th>Pago Elec.</th>
+                    <th>Soporte</th>
+                    <th>Seguridad</th>
+                    <th>2 Años</th>
+                    <th>Fact. Online</th>
+                    <th>1 Año</th>
+                    <th>Probabilidad</th>
+                    <th>Predicción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Se llenará dinámicamente -->
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script src="js/predictions.js"></script>

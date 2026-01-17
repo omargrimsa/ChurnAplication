@@ -28,7 +28,69 @@ async function loadCustomerInfo() {
     }
 }
 
+// Función para cargar el historial de predicciones
+async function loadPredictionHistory() {
+    try {
+        const response = await fetch(`/api/predictions/customer/${customerId}`);
+        if (response.ok) {
+            const predictions = await response.json();
+            const tbody = document.querySelector('#historyTable tbody');
+            tbody.innerHTML = ''; // Limpiar tabla
+
+            if (predictions.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="13" style="text-align:center;">No hay historial de predicciones.</td></tr>';
+                return;
+            }
+
+            // Ordenar por fecha descendente (más reciente primero)
+            predictions.sort((a, b) => new Date(b.sentAt) - new Date(a.sentAt));
+
+            predictions.forEach(p => {
+                const row = document.createElement('tr');
+                
+                // Formatear fecha
+                const date = new Date(p.sentAt).toLocaleString();
+                
+                // Formatear probabilidad
+                const prob = p.churnProbability != null ? (p.churnProbability * 100).toFixed(1) + '%' : 'N/A';
+                
+                // Formatear estado (Will Cancel)
+                let statusHtml = 'N/A';
+                if (p.willCancel === true) {
+                    statusHtml = '<span class="status-churn">Churn</span>';
+                } else if (p.willCancel === false) {
+                    statusHtml = '<span class="status-safe">Seguro</span>';
+                }
+
+                // Helper para iconos booleanos
+                const check = (val) => val ? '✅' : '❌';
+
+                row.innerHTML = `
+                    <td>${date}</td>
+                    <td>${p.customerTenure}</td>
+                    <td>$${p.accountTotal}</td>
+                    <td>$${p.accountChargesMonthly}</td>
+                    <td style="text-align:center;">${check(p.isMonthlyContract)}</td>
+                    <td style="text-align:center;">${check(p.isElectronicPay)}</td>
+                    <td style="text-align:center;">${check(p.hasTechnicalSupport)}</td>
+                    <td style="text-align:center;">${check(p.hasOnlineSecurity)}</td>
+                    <td style="text-align:center;">${check(p.hasTwoYearContract)}</td>
+                    <td style="text-align:center;">${check(p.hasOnlineInvoices)}</td>
+                    <td style="text-align:center;">${check(p.hasOneYearContract)}</td>
+                    <td>${prob}</td>
+                    <td>${statusHtml}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+    } catch (error) {
+        console.error("Error cargando historial:", error);
+    }
+}
+
+// Inicializar cargas
 loadCustomerInfo();
+loadPredictionHistory();
 
 // 2. Manejar el envío del formulario
 document.getElementById('predictionForm').addEventListener('submit', async function(event) {
@@ -91,6 +153,12 @@ document.getElementById('predictionForm').addEventListener('submit', async funct
 
             // Desplazar el scroll hasta el resultado
             resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            // Recargar el historial para mostrar la nueva predicción
+            loadPredictionHistory();
+
+            // Limpiar el formulario
+            document.getElementById('predictionForm').reset();
 
         } else {
             const errorText = await response.text();

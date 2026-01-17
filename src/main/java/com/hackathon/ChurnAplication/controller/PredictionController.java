@@ -1,16 +1,16 @@
 package com.hackathon.ChurnAplication.controller;
 
 
+import com.hackathon.ChurnAplication.dto.CustomerPredictionDTO;
 import com.hackathon.ChurnAplication.dto.ModelInputDTO;
 import com.hackathon.ChurnAplication.dto.PredictionResultDTO;
 import com.hackathon.ChurnAplication.service.PredictionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/predictions")
@@ -34,6 +34,14 @@ public class PredictionController {
         return ResponseEntity.ok(result);
     }
 
-
+    /* Endpoint: GET /api/predictions/customer/{customerId}
+       Función:
+       - Obtener el historial completo de predicciones de un cliente específico.
+    */
+    @GetMapping("/customer/{customerId}")
+    public ResponseEntity<List<CustomerPredictionDTO>> getCustomerPredictions(@PathVariable Long customerId) {
+        List<CustomerPredictionDTO> predictions = predictionService.getPredictionsByCustomer(customerId);
+        return ResponseEntity.ok(predictions);
+    }
 
 }

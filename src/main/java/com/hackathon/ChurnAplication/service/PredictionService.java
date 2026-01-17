@@ -1,10 +1,7 @@
 package com.hackathon.ChurnAplication.service;
 
 
-import com.hackathon.ChurnAplication.dto.ChurnPredictionRequestDTO;
-import com.hackathon.ChurnAplication.dto.ChurnPredictionResponseDTO;
-import com.hackathon.ChurnAplication.dto.ModelInputDTO;
-import com.hackathon.ChurnAplication.dto.PredictionResultDTO;
+import com.hackathon.ChurnAplication.dto.*;
 import com.hackathon.ChurnAplication.model.Customer;
 import com.hackathon.ChurnAplication.model.ModelInput;
 import com.hackathon.ChurnAplication.model.PredictionResult;
@@ -17,6 +14,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor // Inyección de dependencias automática para campos final
@@ -113,8 +112,38 @@ public class PredictionService {
         );
 
     }
+
+    // Nuevo método para obtener el historial de predicciones de un cliente
+    public List<CustomerPredictionDTO> getPredictionsByCustomer(Long customerId) {
+        // 1. Obtener entidades de la BD
+        List<ModelInput> inputs = modelInputRepository.findByCustomerId(customerId);
+
+        // 2. Mapear a DTOs
+        return inputs.stream().map(input -> {
+            PredictionResult result = input.getPredictionResult();
+
+            return CustomerPredictionDTO.builder()
+                    // Datos del Input
+                    .modelInputId(input.getId())
+                    .customerTenure(input.getCustomerTenure())
+                    .accountTotal(input.getAccountTotal())
+                    .accountChargesMonthly(input.getAccountChargesMonthly())
+                    .isMonthlyContract(input.getIsMonthlyContract())
+                    .isElectronicPay(input.getIsElectronicPay())
+                    .hasTechnicalSupport(input.getHasTechnicalSupport())
+                    .hasOnlineSecurity(input.getHasOnlineSecurity())
+                    .hasTwoYearContract(input.getHasTwoYearContract())
+                    .hasOnlineInvoices(input.getHasOnlineInvoices())
+                    .hasOneYearContract(input.getHasOneYearContract())
+                    .sentAt(input.getSentedAt())
+
+                    // Datos del Resultado (Manejar null por si acaso no hay resultado aún)
+                    .predictionResultId(result != null ? result.getId() : null)
+                    .churnProbability(result != null ? result.getChurnProbability() : null)
+                    .willCancel(result != null ? result.getWillCancel() : null)
+                    .predictedAt(result != null ? result.getPredictedAt() : null)
+                    .build();
+
+        }).collect(Collectors.toList());
+    }
 }
-
-
-
-        

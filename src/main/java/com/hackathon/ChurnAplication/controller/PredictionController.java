@@ -1,14 +1,18 @@
 package com.hackathon.ChurnAplication.controller;
 
 
+import com.hackathon.ChurnAplication.dto.BatchPredictionResponseDTO;
 import com.hackathon.ChurnAplication.dto.CustomerPredictionDTO;
 import com.hackathon.ChurnAplication.dto.ModelInputDTO;
 import com.hackathon.ChurnAplication.dto.PredictionResultDTO;
+import com.hackathon.ChurnAplication.service.CsvPredictionService;
 import com.hackathon.ChurnAplication.service.PredictionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,6 +22,7 @@ import java.util.List;
 public class PredictionController {
 
     private final PredictionService predictionService;
+    private final CsvPredictionService csvPredictionService;
 
     /* Endpoint: POST /api/predictions
        Función:
@@ -42,6 +47,17 @@ public class PredictionController {
     public ResponseEntity<List<CustomerPredictionDTO>> getCustomerPredictions(@PathVariable Long customerId) {
         List<CustomerPredictionDTO> predictions = predictionService.getPredictionsByCustomer(customerId);
         return ResponseEntity.ok(predictions);
+    }
+
+    /* Endpoint: POST /api/predictions/upload-csv
+       Función:
+       - Carga masiva de predicciones desde un archivo CSV.
+       - Retorna un reporte con el resultado del procesamiento.
+    */
+    @PostMapping(value = "/upload-csv", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<BatchPredictionResponseDTO> uploadCsv(@RequestParam("file") MultipartFile file) {
+        BatchPredictionResponseDTO report = csvPredictionService.processCsvFile(file);
+        return ResponseEntity.ok(report);
     }
 
 }

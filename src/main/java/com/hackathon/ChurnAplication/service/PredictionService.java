@@ -17,6 +17,20 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
+import org.springframework.web.multipart.MultipartFile;
+import jakarta.validation.Validator; // Importante: Jakarta Validation
+import jakarta.validation.ConstraintViolation;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.Set;
+import java.util.ArrayList;
+
+
+
+
 @Service
 @RequiredArgsConstructor // Inyección de dependencias automática para campos final
 public class PredictionService {
@@ -146,4 +160,13 @@ public class PredictionService {
 
         }).collect(Collectors.toList());
     }
+
+
+    // Logica para la lectura y procesamiento el CSV
+
+
+
+
+
+
 }

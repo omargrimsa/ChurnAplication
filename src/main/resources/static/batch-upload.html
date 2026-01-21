@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Carga Masiva de Predicciones - ChurnInsight</title>
+    <link rel="stylesheet" href="css/index.css"> <!-- Estilos base -->
+    <link rel="stylesheet" href="css/batch-upload.css"> <!-- Estilos específicos -->
+</head>
+<body>
+
+<a href="index.html" class="back-link">← Volver al Inicio</a>
+
+<div class="card">
+    <h3>Carga Masiva de Predicciones (CSV)</h3>
+    <p>Sube un archivo CSV con los datos de los clientes para procesar predicciones en lote.</p>
+
+    <!-- Botón para descargar plantilla -->
+    <button id="btnDownloadTemplate" class="btn-template" type="button">⬇ Descargar Plantilla CSV</button>
+
+    <form id="uploadForm">
+        <div class="upload-area" id="dropZone">
+            <p>Arrastra tu archivo CSV aquí o haz clic para seleccionar</p>
+            <input type="file" id="csvFile" name="file" accept=".csv" style="display: none;" required>
+            <p id="fileName" class="file-name"></p>
+        </div>
+
+        <button type="submit" id="btnUpload">Subir y Procesar</button>
+    </form>
+
+    <div id="loading">
+        <p>Procesando archivo... Por favor espera.</p>
+    </div>
+</div>
+
+<!-- Reporte de Resultados -->
+<div id="reportSection" class="card report-box">
+    <h3>Reporte de Procesamiento</h3>
+
+    <div class="summary-stats">
+        <div class="stat-card bg-blue">
+            <h4>Total Filas</h4>
+            <h2 id="totalRows">0</h2>
+        </div>
+        <div class="stat-card bg-green">
+            <h4>Exitosos</h4>
+            <h2 id="successCount">0</h2>
+        </div>
+        <div class="stat-card bg-red">
+            <h4>Fallidos</h4>
+            <h2 id="failureCount">0</h2>
+        </div>
+    </div>
+
+    <div id="errorSection" style="display: none;">
+        <h4>Detalle de Errores:</h4>
+        <div class="error-list" id="errorList">
+            <!-- Errores dinámicos -->
+        </div>
+    </div>
+
+    <!-- Tabla de Resultados Exitosos -->
+    <div id="successSection" style="display: none; margin-top: 2rem;">
+        <h4>Predicciones Exitosas:</h4>
+        <div style="overflow-x: auto;">
+            <table id="batchResultsTable" class="batch-table">
+                <thead>
+                    <tr>
+                        <th>ID Externo</th>
+                        <th>Nombre</th>
+                        <th>Meses</th>
+                        <th>Total</th>
+                        <th>Mensual</th>
+                        <th>Contrato Mensual</th>
+                        <th>Pago Elec.</th>
+                        <th>Soporte</th>
+                        <th>Seguridad</th>
+                        <th>2 Años</th>
+                        <th>Fact. Online</th>
+                        <th>1 Año</th>
+                        <th>Probabilidad</th>
+                        <th>Predicción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Se llenará dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="js/batch-upload.js"></script>
+
+</body>
+</html>

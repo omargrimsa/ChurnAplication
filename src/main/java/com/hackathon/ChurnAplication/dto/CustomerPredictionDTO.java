@@ -14,6 +14,10 @@ public class CustomerPredictionDTO {
        - Servir como historial completo de una predicción para mostrar en el frontend.
     */
 
+    // --- Datos del Cliente (Nuevo) ---
+    private String externalId;
+    private String customerName;
+
     // --- Datos del Input (Lo que se envió) ---
     private Long modelInputId;
     private Float customerTenure;

@@ -1,0 +1,140 @@
+/* Heredamos estilos base de index.css si se desea, o definimos propios */
+body { font-family: sans-serif; padding: 2rem; max-width: 1200px; margin: 0 auto; background-color: #f9f9f9; }
+
+.card {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h3 { margin-top: 0; color: #333; }
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    text-decoration: none;
+    color: #666;
+}
+.back-link:hover { text-decoration: underline; }
+
+/* Área de carga */
+.upload-area {
+    border: 2px dashed #ccc;
+    padding: 2rem;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+.upload-area:hover {
+    background-color: #f8f9fa;
+    border-color: #007bff;
+}
+.file-name {
+    font-weight: bold;
+    color: #007bff;
+    margin-top: 0.5rem;
+}
+
+/* Botones */
+button {
+    background-color: #28a745;
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 4px;
+    width: 100%;
+}
+button:hover { background-color: #218838; }
+button:disabled { background-color: #ccc; cursor: not-allowed; }
+
+.btn-template {
+    background-color: #6c757d;
+    margin-bottom: 1rem;
+    width: auto; /* Botón más pequeño */
+    display: inline-block;
+}
+.btn-template:hover { background-color: #5a6268; }
+
+/* Reporte */
+.report-box {
+    margin-top: 2rem;
+    display: none; /* Oculto por defecto */
+}
+.summary-stats {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+.stat-card {
+    flex: 1;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    color: white;
+}
+.bg-blue { background-color: #17a2b8; }
+.bg-green { background-color: #28a745; }
+.bg-red { background-color: #dc3545; }
+
+/* Lista de errores */
+.error-list {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    background-color: #fff3f3;
+    border-radius: 4px;
+}
+.error-item {
+    color: #dc3545;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #ffcccc;
+    padding-bottom: 0.25rem;
+}
+
+#loading {
+    display: none;
+    text-align: center;
+    margin-top: 1rem;
+    font-weight: bold;
+    color: #555;
+}
+
+/* Estilos adicionales para la tabla de resultados batch */
+.batch-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.85rem;
+}
+.batch-table th, .batch-table td {
+    border: 1px solid #ddd;
+    padding: 6px;
+    text-align: left;
+}
+.batch-table th {
+    background-color: #f2f2f2;
+    white-space: nowrap; /* Evitar que los títulos se rompan feo */
+}
+.status-churn {
+    color: #721c24;
+    font-weight: bold;
+    background-color: #f8d7da;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+.status-safe {
+    color: #155724;
+    font-weight: bold;
+    background-color: #d4edda;
+    padding: 2px 6px;
+    border-radius: 4px;
+}

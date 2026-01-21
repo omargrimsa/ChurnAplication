@@ -3,9 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Registro de Clientes - ChurnInsight</title>
-    <link rel="stylesheet" href="css/index.css">
+    <!-- Agregamos ?v=2.0 para forzar la recarga del CSS y evitar caché -->
+    <link rel="stylesheet" href="css/index.css?v=2.0">
 </head>
 <body>
+
+<!-- Tarjeta 0: Acciones Rápidas (Opción B) -->
+<div class="card action-card">
+    <h3>¿Tienes muchos datos?</h3>
+    <p style="margin-bottom: 1rem; color: #555;">
+        Puedes cargar un archivo CSV con múltiples clientes para procesar predicciones de forma masiva.
+    </p>
+    <a href="batch-upload.html" class="btn-batch">Ir a Carga Masiva (CSV)</a>
+</div>
 
 <!-- Tarjeta 1: Formulario de Registro -->
 <div class="card">
@@ -43,6 +53,6 @@
     </table>
 </div>
 
-<script src="js/index.js"></script>
+<script src="js/index.js?v=2.0"></script>
 </body>
 </html>

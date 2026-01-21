@@ -48,3 +48,26 @@ tr:last-child td { border-bottom: none; }
     display: inline-block;
 }
 .btn-predict:hover { background-color: #0056b3; }
+
+/* Estilos específicos para la tarjeta de acciones */
+.action-card {
+    background-color: #e9ecef; /* Un gris muy suave para diferenciarla */
+    border: 1px solid #ced4da;
+    text-align: center;
+    padding: 1.5rem;
+}
+.btn-batch {
+    background-color: #17a2b8; /* Color Info (Azulito) */
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    width: auto; /* Ancho automático al contenido */
+}
+.btn-batch:hover {
+    background-color: #138496;
+}

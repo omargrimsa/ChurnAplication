@@ -47,6 +47,24 @@ public class CustomerService implements ICustomerService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<CustomerDetailDTO> searchCustomers(String searchBy, String searchTerm) {
+        List<Customer> customers;
+        if ("externalId".equalsIgnoreCase(searchBy)) {
+            customers = customerRepository.findByExternalIdContainingIgnoreCase(searchTerm);
+        } else if ("name".equalsIgnoreCase(searchBy)) {
+            customers = customerRepository.findByNameContainingIgnoreCase(searchTerm);
+        } else {
+            // Si el criterio no es válido, devolvemos una lista vacía o todos los clientes.
+            // Devolver una lista vacía es más seguro para evitar sobrecargar la BD.
+            customers = new ArrayList<>();
+        }
+
+        return customers.stream()
+                .map(this::mapToCustomerDetailDTO)
+                .collect(Collectors.toList());
+    }
+
     // Método de ayuda para convertir una entidad Customer a CustomerDetailDTO
     private CustomerDetailDTO mapToCustomerDetailDTO(Customer customer) {
         CustomerDetailDTO dto = new CustomerDetailDTO();

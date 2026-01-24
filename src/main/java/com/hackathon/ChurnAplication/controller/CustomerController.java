@@ -25,8 +25,16 @@ public class CustomerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CustomerDetailDTO>> getAllCustomers() {
-        List<CustomerDetailDTO> allCustomers = customerService.getAllCustomers();
-        return new ResponseEntity<>(allCustomers, HttpStatus.OK);
+    public ResponseEntity<List<CustomerDetailDTO>> getCustomers(
+            @RequestParam(required = false) String searchBy,
+            @RequestParam(required = false) String searchTerm) {
+        
+        List<CustomerDetailDTO> customers;
+        if (searchBy != null && searchTerm != null && !searchTerm.isEmpty()) {
+            customers = customerService.searchCustomers(searchBy, searchTerm);
+        } else {
+            customers = customerService.getAllCustomers();
+        }
+        return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 }

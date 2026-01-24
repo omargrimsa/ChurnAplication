@@ -3,6 +3,7 @@ package com.hackathon.ChurnAplication.repository;
 import com.hackathon.ChurnAplication.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 // La interface extiende de JpaRepository y los parámetros son <Entidad a gestionar, Tipo de dato del ID de la Entidad>
@@ -14,5 +15,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     // un registro con este externalId. Útil para validaciones antes de guardar.
     boolean existsByExternalId(String externalId);
 
-
+    // Nuevos métodos para la búsqueda
+    List<Customer> findByExternalIdContainingIgnoreCase(String externalId);
+    List<Customer> findByNameContainingIgnoreCase(String name);
 }

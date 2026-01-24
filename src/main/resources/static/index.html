@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Registro de Clientes - ChurnInsight</title>
-    <!-- Agregamos ?v=2.0 para forzar la recarga del CSS y evitar caché -->
-    <link rel="stylesheet" href="css/index.css?v=2.0">
+    <!-- Agregamos ?v=2.2 para forzar la recarga del CSS -->
+    <link rel="stylesheet" href="css/index.css?v=2.2">
 </head>
 <body>
 
@@ -39,20 +39,39 @@
 <!-- Tarjeta 2: Lista de Clientes -->
 <div class="card">
     <h3>Lista de Clientes Registrados</h3>
-    <table id="customersTable">
-        <thead>
-        <tr>
-            <th>ID Externo</th>
-            <th>Nombre</th>
-            <th>Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Aquí se insertarán las filas dinámicamente -->
-        </tbody>
-    </table>
+
+    <!-- Barra de Búsqueda -->
+    <div class="search-container">
+        <select id="searchBy">
+            <option value="externalId">Id Externo</option>
+            <option value="name">Nombre</option>
+        </select>
+        <input type="text" id="searchTerm" placeholder="Buscar cliente...">
+        <button id="btnSearch" type="button">Buscar</button>
+    </div>
+
+    <!-- Contenedor con scroll para la tabla -->
+    <div class="table-scroll-container">
+        <table id="customersTable">
+            <thead>
+            <tr>
+                <th>ID Externo</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Aquí se insertarán las filas dinámicamente -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mensaje de No Resultados -->
+    <div id="noResultsMessage" class="no-results">
+        No hay resultados para tu búsqueda. Verificá los datos e intentá nuevamente.
+    </div>
 </div>
 
-<script src="js/index.js?v=2.0"></script>
+<script src="js/index.js?v=2.1"></script>
 </body>
 </html>

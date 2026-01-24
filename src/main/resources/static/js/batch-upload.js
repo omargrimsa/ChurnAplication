@@ -77,6 +77,11 @@ uploadForm.addEventListener('submit', async (e) => {
         if (response.ok) {
             const report = await response.json();
             showReport(report);
+            
+            // --- LIMPIEZA DEL FORMULARIO TRAS ÉXITO ---
+            fileInput.value = ''; // Limpiar el input file interno
+            fileNameDisplay.textContent = ''; // Limpiar el texto visual del nombre del archivo
+
         } else {
             const errorText = await response.text();
             alert("Error al subir el archivo: " + errorText);

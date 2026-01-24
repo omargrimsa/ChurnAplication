@@ -33,9 +33,20 @@ button:hover { background-color: #218838; }
 .error { color: red; }
 
 /* Estilos para la tabla */
-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+table { width: 100%; border-collapse: collapse; margin-top: 0; /* Quitamos margen top porque lo maneja el contenedor */ }
 th, td { border-bottom: 1px solid #eee; padding: 12px; text-align: left; }
-th { background-color: #f8f9fa; color: #333; font-weight: 600; }
+
+/* Sticky Header: Encabezado fijo al hacer scroll */
+th {
+    background-color: #f8f9fa;
+    color: #333;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 1; /* Asegura que quede por encima del contenido */
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1); /* Sombrita sutil al borde inferior */
+}
+
 tr:last-child td { border-bottom: none; }
 
 .btn-predict {
@@ -70,4 +81,57 @@ tr:last-child td { border-bottom: none; }
 }
 .btn-batch:hover {
     background-color: #138496;
+}
+
+/* Estilos para la barra de búsqueda */
+.search-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1rem;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 4px;
+    border: 1px solid #e9ecef;
+}
+
+.search-container select {
+    padding: 0.6rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+}
+
+.search-container input {
+    flex-grow: 1; /* Ocupa el espacio restante */
+}
+
+.search-container button {
+    width: auto; /* Ancho automático */
+    background-color: #007bff; /* Azul primario */
+}
+
+.search-container button:hover {
+    background-color: #0056b3;
+}
+
+.no-results {
+    text-align: center;
+    padding: 2rem;
+    color: #6c757d;
+    font-style: italic;
+    border: 1px dashed #dee2e6;
+    border-radius: 4px;
+    margin-top: 1rem;
+    display: none; /* Oculto por defecto */
+}
+
+/* Contenedor con scroll para la tabla */
+.table-scroll-container {
+    max-height: 400px; /* Altura aproximada para 8-10 filas */
+    overflow-y: auto;  /* Scroll vertical automático */
+    border: 1px solid #eee; /* Borde sutil alrededor del área de scroll */
+    border-radius: 4px;
+    margin-top: 1rem;
 }

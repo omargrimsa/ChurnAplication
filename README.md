@@ -24,8 +24,8 @@ En el contexto de un Hackathon de **NoCountry**, desarrollamos esta solución pa
 ## ✨ Características Principales
 
 *   **Gestión de Clientes:** Registro y listado de clientes con validación de duplicados por ID de negocio (`External ID`).
-*   **Predicción Individual:** Formulario interactivo para evaluar el riesgo de un cliente específico en tiempo real.
-*   **Carga Masiva (Batch Processing):** Procesamiento de archivos **CSV** para realizar predicciones de cientos de clientes simultáneamente.
+*   **Predicción Individual:** Formulario interactivo para evaluar el riesgo de un cliente específico.
+*   **Carga Masiva (Batch Processing):** Procesamiento de archivos **CSV** para realizar predicciones de multiples clientes simultáneamente.
 *   **Historial de Predicciones:** Visualización detallada de la evolución del riesgo de cada cliente a lo largo del tiempo.
 *   **Reportes de Carga:** Feedback inmediato sobre el procesamiento de archivos (filas exitosas, fallidas y detalle de errores).
 *   **Interfaz Intuitiva:** Frontend limpio y responsivo con indicadores visuales de estado (Churn/Seguro).
@@ -37,12 +37,13 @@ En el contexto de un Hackathon de **NoCountry**, desarrollamos esta solución pa
 ### Backend
 *   **Lenguaje:** Java 17
 *   **Framework:** Spring Boot 3 (Web, Data JPA, Validation)
-*   **Base de Datos:** H2 Database (En memoria, en etapainicial de desarrollo del proyecto)
-      y finalmnte se uso MySQL para datos persistidos.
+*   **Base de Datos:** H2 Database (En memoria, en etapa inicial del desarrollo del proyecto)
+      y en la etapa final se uso MySQL para persistir los datos.
 *   **Herramientas:** 
     *   `OpenCSV` (Procesamiento de archivos masivos)
     *   `RestTemplate` (Comunicación con API de IA)
     *   `Lombok` (Reducción de código repetitivo)
+    *   `Jackson` (serializar y deserializar objetos Java)
 
 ### Frontend
 *   **Tecnologías:** HTML5, CSS3, Vanilla JavaScript (ES6+).
@@ -50,7 +51,7 @@ En el contexto de un Hackathon de **NoCountry**, desarrollamos esta solución pa
 
 ### Infraestructura / Integración
 *   **Modelo IA:** Integración vía REST con servicio externo (Python).
-*   **Despliegue:** Se llevo a cabo el depliegue de la aplciacion de Backend y el modelo de predición en un servidor VPS del proveedor Hostinger
+*   **Despliegue:** Se llevó a cabo el depliegue de la aplciacion de Backend y el modelo de predición en un servidor VPS del proveedor Hostinger
                     KVM 2 con 2 núcleos vCPU, 8 GB de RAM y 100 GB de almacenamiento NVMe SSD.
 
 ---

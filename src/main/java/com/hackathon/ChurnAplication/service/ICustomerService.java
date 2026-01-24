@@ -10,4 +10,7 @@ public interface ICustomerService {
 
     // Método para obtener todos los clientes.
     List<CustomerDetailDTO> getAllCustomers();
+
+    // Nuevo método para buscar clientes por criterio (externalId o name) y término.
+    List<CustomerDetailDTO> searchCustomers(String searchBy, String searchTerm);
 }

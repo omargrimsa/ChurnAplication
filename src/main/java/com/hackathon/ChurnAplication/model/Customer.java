@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "customers")
-public class Customer {
+public class `Customer {
 
    /* Función de la clase:
     - Representar al cliente
